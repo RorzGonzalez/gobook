@@ -1,0 +1,14 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "process",
+            "label": "Open in Chrome",
+            "command": "Chrome",
+            "osx": {
+                "command": "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+            },
+            "args": ["https://gobook.test/${relativeFile}"]
+        }
+    ]
+}
