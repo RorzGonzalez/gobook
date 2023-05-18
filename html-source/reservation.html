@@ -18,6 +18,13 @@
             rel="stylesheet"
             href="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.3.2/dist/css/datepicker-bs5.min.css"
         />
+        <link rel="stylesheet" type="text/css" href="https://unpkg.com/notie/dist/notie.min.css" />
+        <style>
+            /* override styles here */
+            .notie-container {
+                box-shadow: none;
+            }
+        </style>
 
         <style>
             .my-footer {
@@ -151,6 +158,7 @@
             crossorigin="anonymous"
         ></script>
         <script src="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.3.2/dist/js/datepicker-full.min.js"></script>
+        <script src="https://unpkg.com/notie"></script>
 
         <script>
             console.log(`I am printing to the console`)
@@ -159,13 +167,7 @@
             // myEl.classList.add('redText')
 
             document.getElementById('colorButton').addEventListener('click', function () {
-                let myEl = document.getElementById('myParagraph')
-
-                if (myEl.classList.contains('redText')) {
-                    myEl.classList.remove('redText')
-                } else {
-                    myEl.classList.add('redText')
-                }
+                notify('This is my message')
             })
 
             const elem = document.getElementById('reservation-dates')
@@ -175,6 +177,8 @@
             })
 
             // console.log(`I am printing to the console`)
+
+            // Bootstrap validation
             ;(() => {
                 'use strict'
 
@@ -197,6 +201,22 @@
                     )
                 })
             })()
+
+            // Notie alert overlays
+            notie.alert({
+                type: Number | String, // optional, default = 4, enum: [1, 2, 3, 4, 5, 'success', 'warning', 'error', 'info', 'neutral']
+                text: String,
+                stay: Boolean, // optional, default = false
+                time: Number, // optional, default = 3, minimum = 1,
+                position: String // optional, default = 'top', enum: ['top', 'bottom']
+            })
+
+            function notify(msg, msgType = 'success') {
+                notie.alert({
+                    type: msgType, // "success", "error", "warning", "info"
+                    text: msg
+                })
+            }
         </script>
     </body>
 </html>
