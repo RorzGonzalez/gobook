@@ -14,6 +14,11 @@
             crossorigin="anonymous"
         />
 
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.3.2/dist/css/datepicker-bs5.min.css"
+        />
+
         <style>
             .my-footer {
                 height: 5em;
@@ -26,6 +31,10 @@
 
             .room-image {
                 max-width: 50%;
+            }
+
+            .redText {
+                color: red;
             }
         </style>
     </head>
@@ -82,45 +91,45 @@
                 <div class="col-md-6">
                     <h1 class="mt-5">Search for Availability</h1>
 
-                    <form action="reservation.html" method="get">
-                        <div class="form-row">
+                    <form action="reservation.html" method="get" novalidate class="needs-validation">
+                        <div class="row">
                             <div class="col">
-                                <div class="form-group">
-                                    <label for="start_date">Starting Date</label>
-                                    <input
-                                        type="date"
-                                        class="form-control"
-                                        id="start_date"
-                                        name="start_date"
-                                        aria-describedby="startDateHelp"
-                                        required
-                                    />
-                                    <small id="startDateHelp" class="form-text text-muted"
-                                        >Enter your starting date in the format of YYYY-MM-DD</small
-                                    >
-                                </div>
-                            </div>
-
-                            <div class="col">
-                                <div class="form-group">
-                                    <label for="end_date">Ending Date</label>
-                                    <input
-                                        type="date"
-                                        class="form-control"
-                                        id="end_date"
-                                        name="end_date"
-                                        aria-describedby="endDateHelp"
-                                        required
-                                    />
-                                    <small id="endDateHelp" class="form-text text-muted"
-                                        >Enter your ending date in the format of YYYY-MM-DD</small
-                                    >
+                                <div class="row" id="reservation-dates">
+                                    <div class="col-md-6">
+                                        <input
+                                            required
+                                            class="form-control"
+                                            type="text"
+                                            name="start"
+                                            placeholder="Arrival"
+                                        />
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input
+                                            required
+                                            class="form-control"
+                                            type="text"
+                                            name="end"
+                                            placeholder="Departure"
+                                        />
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
+                        <hr />
+
                         <button type="submit" class="btn btn-primary">Search Availability</button>
                     </form>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <p id="myParagraph">This is some text</p>
+                    <p>
+                        <button id="colorButton" class="btn btn-outline-secondary">Click me</button>
+                    </p>
                 </div>
             </div>
         </div>
@@ -141,5 +150,53 @@
             integrity="sha384-Y4oOpwW3duJdCWv5ly8SCFYWqFDsfob/3GkgExXKV4idmbt98QcxXYs9UoXAB7BZ"
             crossorigin="anonymous"
         ></script>
+        <script src="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.3.2/dist/js/datepicker-full.min.js"></script>
+
+        <script>
+            console.log(`I am printing to the console`)
+
+            // let myEl = document.getElementById('myParagraph')
+            // myEl.classList.add('redText')
+
+            document.getElementById('colorButton').addEventListener('click', function () {
+                let myEl = document.getElementById('myParagraph')
+
+                if (myEl.classList.contains('redText')) {
+                    myEl.classList.remove('redText')
+                } else {
+                    myEl.classList.add('redText')
+                }
+            })
+
+            const elem = document.getElementById('reservation-dates')
+            const rangePicker = new DateRangePicker(elem, {
+                format: 'yyyy-mm-dd',
+                minDate: new Date()
+            })
+
+            // console.log(`I am printing to the console`)
+            ;(() => {
+                'use strict'
+
+                // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                const forms = document.querySelectorAll('.needs-validation')
+
+                // Loop over them and prevent submission
+                Array.from(forms).forEach((form) => {
+                    form.addEventListener(
+                        'submit',
+                        (event) => {
+                            if (!form.checkValidity()) {
+                                event.preventDefault()
+                                event.stopPropagation()
+                            }
+
+                            form.classList.add('was-validated')
+                        },
+                        false
+                    )
+                })
+            })()
+        </script>
     </body>
 </html>
