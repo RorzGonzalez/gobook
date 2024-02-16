@@ -43,6 +43,10 @@
             .redText {
                 color: red;
             }
+
+            .datepicker {
+                z-index: 20000;
+            }
         </style>
     </head>
 
@@ -169,8 +173,25 @@
             // myEl.classList.add('redText')
 
             document.getElementById('colorButton').addEventListener('click', function () {
-                attention.error({
-                    msg: 'Hello Guys'
+                let html = `
+                <form id="check-availabiity" action="" method="post" novalidate class="needs-validation">
+                    <div class="form-row">
+                        <div class="col">
+                            <div class="row" id="reservation-dates-modal">
+                                <div class="col-md-6">
+                                    <input required class="form-control" type="text" name="start" id="start" placeholder="Arrival" />
+                                </div>
+                                <div class="col-md-6">
+                                    <input required class="form-control" type="text" name="end" id="end" placeholder="Departure" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                `
+                attention.custom({
+                    msg: html,
+                    title: 'Choose your dates'
                 })
             })
 
@@ -250,6 +271,7 @@
 
                     Toast.fire({})
                 }
+
                 let success = function (c) {
                     const { msg = '', title = '', footer = '' } = c
                     Swal.fire({
@@ -259,6 +281,7 @@
                         footer: footer
                     })
                 }
+
                 let error = function (c) {
                     const { msg = '', title = '', footer = '' } = c
                     Swal.fire({
@@ -269,10 +292,37 @@
                     })
                 }
 
+                async function custom(c) {
+                    const { msg = '', title = '' } = c
+
+                    const { value: formValues } = await Swal.fire({
+                        title: title,
+                        html: msg,
+                        backdrop: false,
+                        focusConfirm: false,
+                        showCancelButton: true,
+                        willOpen: () => {
+                            const elem = document.getElementById('reservation-dates-modal')
+                            const rp = new DateRangePicker(elem, {
+                                format: 'yyyy-mm-dd',
+                                minDate: new Date()
+                            })
+                        },
+                        preConfirm: () => {
+                            return [document.getElementById('start').value, document.getElementById('end').value]
+                        }
+                    })
+
+                    if (formValues) {
+                        Swal.fire(JSON.stringify(formValues))
+                    }
+                }
+
                 return {
                     toast: toast,
                     success: success,
-                    error: error
+                    error: error,
+                    custom: custom
                 }
             }
         </script>

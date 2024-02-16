@@ -8,7 +8,7 @@ import (
 	"github.com/RorzGonzalez/gobook/pkg/render"
 )
 
-// Repo the repositury used by the handler
+// Repo the repository used by the handler
 var Repo *Repository
 
 // Repository is the repository type

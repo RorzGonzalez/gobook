@@ -21,7 +21,7 @@ func NewTemplates(a *config.AppConfig) {
 	app = a
 }
 
-// AddDefaultData adds dtata we want on every page of the site
+// AddDefaultData adds data we want on every page of the site
 func AddDefaultData(td *models.TemplateData) *models.TemplateData {
 	return td
 }
